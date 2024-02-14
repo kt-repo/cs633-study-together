@@ -1,0 +1,17 @@
+<li class="item">
+  <app-card>
+    <div class="image">
+      <img [src]="meetup.image" alt="Meetup Image" />
+    </div>
+    <div class="content">
+      <h3>{{ meetup.title }}</h3>
+      <address>{{ meetup.address }}</address>
+      <p>{{ meetup.description }}</p>
+    </div>
+    <div class="actions">
+      <button (click)="toggleFavorite(meetup)">
+        {{ isMeetupFavorite() ? "Remove from favorites" : "Add to favorites" }}
+      </button>
+    </div>
+  </app-card>
+</li>
