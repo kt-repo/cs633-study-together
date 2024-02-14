@@ -27,7 +27,22 @@ app.use('/users', usersRouter);
 app.use('/meetup', meetupRouter);
 
 // connect to database
-mongoose.connect(process.env.DATABASE_URL);
+run();
+async function run() {
+  try {
+    var prod = false;
+    if (prod) {
+      mongoose.connect(process.env.ATLAS_URI);
+      console.log('Connected to production database...');
+    } else {
+      mongoose.connect(process.env.DATABASE_URL);
+      console.log('Connected to development database...');
+    }
+  } catch(err) {
+    console.log(err.message);
+  }
+}
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
