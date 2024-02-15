@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Meetup } from '../interfaces/Meetup';
 import { map } from 'rxjs';
@@ -7,7 +7,7 @@ import { map } from 'rxjs';
   providedIn: 'root',
 })
 export class MeetupService {
-  private apiUrl = 'https://localhost:3001';
+  private apiUrl = 'http://localhost:3001';
   http = inject(HttpClient);
   favorites = signal<Meetup[]>([]);
 
@@ -30,7 +30,7 @@ export class MeetupService {
   }
 
   getMeetups() {
-    return this.http.get<Meetup[]>(`${this.apiUrl}/meetup.json`).pipe(
+    return this.http.get<Meetup[]>(`${this.apiUrl}/meetup`).pipe(
       map((data) => {
         const meetups = [];
         for (const key in data) {
@@ -43,6 +43,6 @@ export class MeetupService {
   }
 
   postMeetup(meetup: Meetup) {
-    return this.http.post(`${this.apiUrl}/meetup.json`, meetup);
+    return this.http.post(`${this.apiUrl}/meetup`, meetup);
   }
 }

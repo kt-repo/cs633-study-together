@@ -21,6 +21,8 @@ router.post('/', async (req, res) => {
         image: req.body.image,
     })
 
+    console.log(meetup);
+
     try {
         const newMeetup = await meetup.save();
         res.status(201).json(newMeetup);
