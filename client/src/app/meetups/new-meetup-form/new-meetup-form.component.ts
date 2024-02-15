@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../../ui/card/card.component';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
 import { MeetupService } from 'src/app/services/meetup.service';
 import { Meetup } from 'src/app/interfaces/Meetup';
 import { Router } from '@angular/router';
@@ -13,27 +13,48 @@ import { Router } from '@angular/router';
   styleUrls: ['./new-meetup-form.component.scss'],
   imports: [CommonModule, ReactiveFormsModule, CardComponent],
 })
-export class NewMeetupFormComponent {
-  formBuilder = inject(FormBuilder);
-  meetupService = inject(MeetupService);
-  router = inject(Router);
+export class NewMeetupFormComponent implements OnInit {
+  meetupForm: FormGroup;
 
-  meetupForm = this.formBuilder.group({
-    title: ['', Validators.required],
-    image: ['', Validators.required],
-    address: ['', Validators.required],
-    description: ['', Validators.required],
-  });
+  constructor(private formBuilder: FormBuilder, private meetupService: MeetupService, private router: Router) {
+    this.meetupForm = this.formBuilder.group({
+      title: [''],
+      description: [''],
+      address: [''],
+      image: ['']
+    });
+  }
+
+  ngOnInit(): void {
+  }
+
+  onFileSelected(event: any) {
+    const file: File | null = event.target.files?.[0] || null; // Use optional chaining to avoid null access
+    if (file) {
+      this.meetupForm.get('image')?.setValue(file); // Use optional chaining to avoid null access
+    }
+  }
 
   submitHandler() {
-    if (this.meetupForm.invalid) {
-      return;
-    }
+    const meetup: Meetup = {
+      id: '', // Generate an ID or handle on server-side
+      title: this.meetupForm.get('title')?.value || '',
+      description: this.meetupForm.get('description')?.value || '',
+      address: this.meetupForm.get('address')?.value || '',
+      image: this.meetupForm.get('image')?.value || null // Initialize with null if not set
+    };
 
-    const meetup = this.meetupForm.value as Meetup;
 
-    this.meetupService.postMeetup(meetup).subscribe(() => {
-      this.router.navigate(['/']);
-    });
+    this.meetupService.postMeetup(meetup).subscribe(
+      response => {
+        console.log('Meetup created successfully:', response);
+        this.router.navigate(['/']);
+        // Handle success response
+      },
+      error => {
+        console.error('Error creating meetup:', error);
+        // Handle error response
+      }
+    );
   }
 }

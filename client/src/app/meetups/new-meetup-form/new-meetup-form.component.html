@@ -6,11 +6,11 @@
     </div>
     <div class="control">
       <label for="image">Meetup Image</label>
-      <input type="url" id="image" formControlName="image" />
+      <input type="file" id="image" (change)="onFileSelected($event)" accept="image/*">
     </div>
     <div class="control">
-      <label for="title">Address</label>
-      <input type="text" id="title" formControlName="address" />
+      <label for="address">Address</label>
+      <input type="text" id="address" formControlName="address" />
     </div>
     <div class="control">
       <label for="description">Description</label>

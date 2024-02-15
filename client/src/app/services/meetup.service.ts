@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Meetup } from '../interfaces/Meetup';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -42,7 +42,17 @@ export class MeetupService {
     );
   }
 
-  postMeetup(meetup: Meetup) {
-    return this.http.post(`${this.apiUrl}/meetup`, meetup);
+  postMeetup(meetup: Meetup): Observable<any> {
+
+    const formData = new FormData();
+    formData.append('title', meetup.title);
+    formData.append('description', meetup.description);
+    formData.append('address', meetup.address);
+    formData.append('image', meetup.image);
+
+    console.log(meetup);
+    console.log(formData);
+
+    return this.http.post<any>(`${this.apiUrl}/meetup`, meetup);
   }
 }

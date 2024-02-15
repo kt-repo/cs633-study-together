@@ -1,7 +1,21 @@
 var express = require('express');
 var router = express.Router();
+const multer = require('multer');
+const path = require('path');
 const Meetup = require('../models/meetup');
 const User = require('../models/user');
+
+// Multer configuration for handling file uploads
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'uploads/'); // Destination folder for uploaded files
+    },
+    filename: function(req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname); // Unique filename for uploaded file
+    }
+});
+
+const upload = multer({ storage: storage });
 
 /* GET users listing. */
 router.get('/', async (req, res) => {
@@ -13,15 +27,13 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', upload.single('image'), async (req, res) => {
     const meetup = new Meetup({
         title: req.body.title,
         description: req.body.description,
         address: req.body.address,
-        image: req.body.image,
-    })
-
-    console.log(meetup);
+        image: req.file ? req.file.path : null // Save file path if uploaded
+    });
 
     try {
         const newMeetup = await meetup.save();
