@@ -7,7 +7,7 @@ import { map } from 'rxjs';
   providedIn: 'root',
 })
 export class MeetupService {
-  private apiUrl = 'https://react-meetup-app-7d585-default-rtdb.firebaseio.com';
+  private apiUrl = 'https://localhost:3001';
   http = inject(HttpClient);
   favorites = signal<Meetup[]>([]);
 
@@ -30,7 +30,7 @@ export class MeetupService {
   }
 
   getMeetups() {
-    return this.http.get<Meetup[]>(`${this.apiUrl}/meetups.json`).pipe(
+    return this.http.get<Meetup[]>(`${this.apiUrl}/meetup.json`).pipe(
       map((data) => {
         const meetups = [];
         for (const key in data) {
@@ -43,6 +43,6 @@ export class MeetupService {
   }
 
   postMeetup(meetup: Meetup) {
-    return this.http.post(`${this.apiUrl}/meetups.json`, meetup);
+    return this.http.post(`${this.apiUrl}/meetup.json`, meetup);
   }
 }
