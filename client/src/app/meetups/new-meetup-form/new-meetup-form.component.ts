@@ -20,19 +20,11 @@ export class NewMeetupFormComponent implements OnInit {
     this.meetupForm = this.formBuilder.group({
       title: [''],
       description: [''],
-      address: [''],
-      image: ['']
+      address: ['']
     });
   }
 
   ngOnInit(): void {
-  }
-
-  onFileSelected(event: any) {
-    const file: File | null = event.target.files?.[0] || null; // Use optional chaining to avoid null access
-    if (file) {
-      this.meetupForm.get('image')?.setValue(file); // Use optional chaining to avoid null access
-    }
   }
 
   submitHandler() {
@@ -40,8 +32,7 @@ export class NewMeetupFormComponent implements OnInit {
       id: '', // Generate an ID or handle on server-side
       title: this.meetupForm.get('title')?.value || '',
       description: this.meetupForm.get('description')?.value || '',
-      address: this.meetupForm.get('address')?.value || '',
-      image: this.meetupForm.get('image')?.value || null // Initialize with null if not set
+      address: this.meetupForm.get('address')?.value || ''
     };
 
 

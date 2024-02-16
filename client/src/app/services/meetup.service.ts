@@ -30,16 +30,7 @@ export class MeetupService {
   }
 
   getMeetups() {
-    return this.http.get<Meetup[]>(`${this.apiUrl}/meetup`).pipe(
-      map((data) => {
-        const meetups = [];
-        for (const key in data) {
-          const meetup = { ...data[key], id: key };
-          meetups.push(meetup);
-        }
-        return meetups;
-      })
-    );
+    return this.http.get<Meetup[]>(`${this.apiUrl}/meetup`);
   }
 
   postMeetup(meetup: Meetup): Observable<any> {
@@ -48,7 +39,6 @@ export class MeetupService {
     formData.append('title', meetup.title);
     formData.append('description', meetup.description);
     formData.append('address', meetup.address);
-    formData.append('image', meetup.image);
 
     console.log(meetup);
     console.log(formData);
