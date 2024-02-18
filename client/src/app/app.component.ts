@@ -15,7 +15,7 @@ import { MainNavigationComponent } from './layout/main-navigation/main-navigatio
     CommonModule,
     RouterOutlet,
     LayoutComponent,
-    MainNavigationComponent,
+    MainNavigationComponent
   ],
 })
 export class AppComponent {

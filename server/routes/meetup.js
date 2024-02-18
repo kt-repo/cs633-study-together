@@ -27,12 +27,11 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', upload.single('image'), async (req, res) => {
+router.post('/', async (req, res) => {
     const meetup = new Meetup({
         title: req.body.title,
         description: req.body.description,
         address: req.body.address,
-        image: req.file ? req.file.path : null // Save file path if uploaded
     });
 
     try {

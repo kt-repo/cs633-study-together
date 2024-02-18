@@ -1,6 +1,7 @@
-import { Component, NgModule } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -13,9 +14,31 @@ import { FormsModule } from '@angular/forms';
 export class RegistrationComponent {
   username: string = '';
   password: string = '';
+  registrationError: string | null = null;
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+  }
 
   onSubmit() {
-    console.log('Registration form submitted:', this.username, this.password);
-    // Implement registration logic here
+    this.authService.register(this.username, this.password).subscribe(
+      (response) => {
+        console.log('Registration successful');
+        // Handle successful registration, e.g., redirect to login page
+      },
+      (error) => {
+        console.error('Registration failed:', error);
+        if (error.error && error.error.message) {
+          this.registrationError = error.error.message;
+        } else {
+          this.registrationError = 'An unexpected error occurred';
+        }
+      },
+      () => {
+        console.log('Registration complete');
+        // Additional completion handling, if needed
+      }
+    );
   }
 }

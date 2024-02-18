@@ -7,7 +7,7 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class MeetupService {
-  private apiUrl = 'http://localhost:3001';
+  private apiUrl = 'http://localhost:3000';
   http = inject(HttpClient);
   favorites = signal<Meetup[]>([]);
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from "@angular/forms";
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -14,8 +15,18 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
 
+  constructor(private authService: AuthService) {}
+
   onSubmit() {
-    console.log('Login form submitted:', this.username, this.password);
-    // Implement login logic here
+    this.authService.login(this.username, this.password).subscribe(
+      response => {
+        console.log('Login successful');
+        // Handle successful login, e.g., redirect to another page
+      },
+      error => {
+        console.error('Login failed:', error);
+        // Handle login error, e.g., display error message
+      }
+    );
   }
 }

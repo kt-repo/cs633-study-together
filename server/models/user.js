@@ -7,11 +7,11 @@ const userSchema = mongoose.Schema({
     password: String,
     firstname: {
         type: String,
-        required: true,
+        required: false,
     },
     lastname: {
         type: String,
-        required: true,
+        required: false,
     },
     favorites: {
         type: meetupSchema.schema,
@@ -19,11 +19,11 @@ const userSchema = mongoose.Schema({
     },
     address: {
         type: String,
-        required: true,
+        required: false,
     },
     school: {
         type: String,
-        required: true,
+        required: false,
     },
 });
 
