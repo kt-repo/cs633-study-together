@@ -30,9 +30,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // CORS
 app.use(cors());
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/meetup', meetupRouter);
+app.use('/api', indexRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/meetup', meetupRouter);
 
 // connect to database
 mongoose.connect(mongodb_uri)
