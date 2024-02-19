@@ -41,7 +41,7 @@ export class NewMeetupFormComponent implements OnInit {
     }
 
     const meetup: Meetup = {
-      id: '', // Generate an ID or handle on server-side
+      _id: '', // Generate an ID or handle on server-side
       title: this.meetupForm.get('title')?.value || '',
       description: this.meetupForm.get('description')?.value || '',
       address: this.meetupForm.get('address')?.value || '',

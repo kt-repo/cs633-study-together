@@ -8,5 +8,4 @@ export interface User {
   favorites: [Meetup],
   address: string,
   school: string
-
 }

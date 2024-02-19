@@ -1,5 +1,5 @@
 export interface Meetup {
-  id: string;
+  _id: string;
   address: string;
   description: string;
   title: string;

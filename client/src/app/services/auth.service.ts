@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { User } from 'src/app/interfaces/User';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import {Meetup} from "../interfaces/Meetup";
 
 
 @Injectable({
@@ -15,8 +16,8 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  register(username: string, password: string) {
-    return this.http.post<{ token: string, userId: string }>(`${this.apiUrl}/users/register`, { username, password }).pipe(
+  register(username: string, password: string, firstname: string, lastname: string, address: string, school: string) {
+    return this.http.post<{ token: string, userId: string }>(`${this.apiUrl}/users/register`, { username, password, firstname, lastname, address, school }).pipe(
       map(response => {
         // Assuming the response contains the user object upon successful registration
         this.setCurrentUserId(response.userId);
@@ -40,6 +41,10 @@ export class AuthService {
   private handleError(error: any): Observable<any> {
     console.error('An error occurred:', error);
     return of(null); // You can handle errors as needed
+  }
+
+  getUserById(userId: string) {
+    return this.http.get<User>(`${this.apiUrl}/users/${userId}`);
   }
 
   // token

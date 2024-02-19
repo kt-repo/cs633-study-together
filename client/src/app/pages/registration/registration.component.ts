@@ -14,6 +14,10 @@ import { AuthService } from '../../services/auth.service';
 export class RegistrationComponent {
   username: string = '';
   password: string = '';
+  firstname: string = '';
+  lastname: string = '';
+  address: string = '';
+  school: string = '';
   registrationError: string | null = null;
 
   constructor(private authService: AuthService) {}
@@ -22,7 +26,7 @@ export class RegistrationComponent {
   }
 
   onSubmit() {
-    this.authService.register(this.username, this.password).subscribe(
+    this.authService.register(this.username, this.password, this.firstname, this.lastname, this.address, this.school).subscribe(
       (response) => {
         console.log('Registration successful');
         // Handle successful registration, e.g., redirect to login page

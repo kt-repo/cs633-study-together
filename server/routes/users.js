@@ -10,7 +10,7 @@ var router = express.Router();
 /* User registration, login */
 router.post('/register', async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, password, firstname, lastname, address, school } = req.body;
     const user = new User({ username, password });
     await user.save();
     const userId = user._id;
@@ -41,6 +41,15 @@ router.get('/profile', async (req, res) => {
     const token = req.headers.authorization.split(' ')[1];
     const payload = jwt.verify(token, 'secret_key');
     const user = await User.findById(payload.userId);
+    res.status(200).send(user);
+  } catch (error) {
+    res.status(401).send('Unauthorized');
+  }
+});
+
+router.get('/:id', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
     res.status(200).send(user);
   } catch (error) {
     res.status(401).send('Unauthorized');

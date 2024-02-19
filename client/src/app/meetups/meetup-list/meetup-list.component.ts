@@ -13,4 +13,27 @@ import { Meetup } from 'src/app/interfaces/Meetup';
 })
 export class MeetupListComponent {
   @Input() meetups: Meetup[] = [];
+
+  constructor(private meetupService: MeetupService) { }
+
+  ngOnInit(): void {
+    this.fetchMeetups();
+  }
+
+  fetchMeetups(): void {
+    this.meetupService.getMeetups().subscribe(
+      (meetups) => {
+        this.meetups = meetups;
+      },
+      (error) => {
+        console.error('Error fetching meetups:', error);
+      }
+    );
+  }
+
+  onMeetupDeleted(meetupId: string): void {
+    // Remove the deleted meetup from the list
+    this.meetups = this.meetups.filter(meetup => meetup._id !== meetupId);
+  }
+
 }

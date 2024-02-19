@@ -49,6 +49,7 @@ router.delete('/:id', verifyToken, async (req, res) => {
     try {
         const meetupId = req.params.id;
         const meetup = await Meetup.findById(meetupId);
+        console.log(meetupId);
 
         // Check if the meetup exists
         if (!meetup) {

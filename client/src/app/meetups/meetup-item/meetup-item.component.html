@@ -1,5 +1,8 @@
 <li class="item">
   <app-card>
+    <div>
+      <button type="button" (click)="onDeleteMeetup(meetup)">Delete</button>
+    </div>
     <div class="content">
       <h3>{{ meetup.title }}</h3>
       <address>{{ meetup.address }}</address>

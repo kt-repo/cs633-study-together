@@ -17,7 +17,7 @@ export class MeetupService {
   }
 
   isMeetupFavorite(meetup: Meetup) {
-    return this.favorites().some((favorite) => favorite.id === meetup.id);
+    return this.favorites().some((favorite) => favorite._id === meetup._id);
   }
 
   addToFavorites(meetup: Meetup) {
@@ -26,12 +26,17 @@ export class MeetupService {
 
   removeFromFavorites(meetup: Meetup) {
     this.favorites.update((oldFavorites) =>
-      oldFavorites.filter((favorite) => favorite.id !== meetup.id)
+      oldFavorites.filter((favorite) => favorite._id !== meetup._id)
     );
   }
 
   getMeetups() {
     return this.http.get<Meetup[]>(`${this.apiUrl}/meetup`);
+  }
+
+  getMeetupId(meetup: Meetup) {
+    const meetupId = meetup._id;
+    return this.http.get<Meetup>(`${this.apiUrl}/meetup/${meetupId}`);
   }
 
   postMeetup(meetup: Meetup, token: String | null): Observable<any> {
@@ -65,4 +70,28 @@ export class MeetupService {
     console.error('An error occurred:', error);
     return of(null);
   }
+
+  deleteMeetup(meetup: Meetup, token: string | null): Observable<any> {
+    const meetupId = meetup._id;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    console.log('heyyyyyyyy');
+    console.log(token);
+    console.log(meetup);
+    return this.http.delete<any>(`${this.apiUrl}/meetup/${meetupId}`, { headers }).pipe(
+      map(response => {
+        console.log(response);
+      }),
+      catchError(error => {
+        let errorMessage = 'An error occurred deleting meetup';
+        if (error.error && error.error.message) {
+          errorMessage = error.error.message;
+        }
+        return throwError(errorMessage);
+      })
+    );
+  }
+
 }

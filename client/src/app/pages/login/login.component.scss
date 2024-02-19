@@ -1,0 +1,26 @@
+.registration-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: inline-block;
+  width: 120px; /* Adjust the width as needed */
+  text-align: left;
+}
+
+input {
+  width: 300px; /* Adjust the width as needed */
+}
+.form-group input {
+  text-align: left;
+}
+
+.button {
+  text-align: left; /* Right justify the button */
+  margin-left: 300px;
+}
