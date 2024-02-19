@@ -25,9 +25,7 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-// Update this line to specify the host (hostname or IP address)
-var host = process.env.HOST || 'localhost'; // Use 'localhost' for local development
-server.listen(port, host);
+server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
