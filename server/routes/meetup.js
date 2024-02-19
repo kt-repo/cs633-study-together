@@ -1,22 +1,9 @@
 var express = require('express');
 var router = express.Router();
-const multer = require('multer');
 const path = require('path');
 const Meetup = require('../models/meetup');
 const User = require('../models/user');
 const verifyToken = require('../auth/authMiddleware');
-
-// Multer configuration for handling file uploads
-const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, 'uploads/'); // Destination folder for uploaded files
-    },
-    filename: function(req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname); // Unique filename for uploaded file
-    }
-});
-
-const upload = multer({ storage: storage });
 
 /* GET users listing. */
 router.get('/', async (req, res) => {
