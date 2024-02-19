@@ -22,6 +22,7 @@ const upload = multer({ storage: storage });
 router.get('/', async (req, res) => {
     try {
         const meetups = await Meetup.find();
+        console.log('hey');
         console.log(meetups);
         res.json(meetups);
     } catch (err) {
