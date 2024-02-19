@@ -30,8 +30,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// CORS
-app.use(cors());
+// // CORS
+// app.use(cors());
+// Enable CORS with specific options for production
+const corsOptions = {
+  origin: 'https://cs633-study-together.onrender.com',
+  methods: 'GET,POST',
+  allowedHeaders: 'Content-Type,Authorization',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+app.use(cors(corsOptions));
 
 app.use('/api', indexRouter);
 app.use('/api/users', usersRouter);
