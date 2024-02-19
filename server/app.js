@@ -49,7 +49,7 @@ app.use('/api/meetup', meetupRouter);
 const mongodb_uri = process.env.DATABASE_URL;
 mongoose.connect(mongodb_uri)
   .then(() => {
-    console.log('Connected to MongoDB');
+    console.log(`Connected to MongoDB at ${mongodb_uri}`);
   })
   .catch(err => {
     console.error('Error connecting to MongoDB Atlas:', err);
