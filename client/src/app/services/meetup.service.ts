@@ -3,12 +3,14 @@ import { Injectable, inject, signal } from '@angular/core';
 import { Meetup } from '../interfaces/Meetup';
 import {map, Observable, of, throwError} from 'rxjs';
 import {catchError} from "rxjs/operators";
+import { environment } from '../environments/environment';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class MeetupService {
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = environment.apiUrl;
   http = inject(HttpClient);
   favorites = signal<Meetup[]>([]);
 

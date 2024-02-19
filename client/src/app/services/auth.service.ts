@@ -4,39 +4,62 @@ import { User } from 'src/app/interfaces/User';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {Meetup} from "../interfaces/Meetup";
+import { environment } from '../environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = environment.apiUrl;
   private USER_KEY = 'currentUserId';
   private TOKEN_KEY = 'accessToken';
 
   constructor(private http: HttpClient) { }
 
-  register(username: string, password: string, firstname: string, lastname: string, address: string, school: string) {
-    return this.http.post<{ token: string, userId: string }>(`${this.apiUrl}/users/register`, { username, password, firstname, lastname, address, school }).pipe(
+  register(username: string, password: string, firstname: string, lastname: string, address: string, school: string): Observable<any> {
+    const registerRequest = this.http.post<{ token: string, userId: string }>(`${this.apiUrl}/users/register`, { username, password, firstname, lastname, address, school });
+
+    registerRequest.pipe(
       map(response => {
         // Assuming the response contains the user object upon successful registration
         this.setCurrentUserId(response.userId);
         this.saveToken(response.token);
+        return response;
       }),
       catchError(this.handleError)
     );
+    return registerRequest; // Return the observable
   }
 
-  login(username: string, password: string) {
-    return this.http.post<{ token: string, userId: string }>(`${this.apiUrl}/users/login`, { username, password }).pipe(
+  login(username: string, password: string): Observable<any> {
+    const loginRequest = this.http.post<{ token: string, userId: string }>(`${this.apiUrl}/users/login`, { username, password });
+
+    loginRequest.pipe(
       map(response => {
         // Assuming the response contains the user object upon successful login
         this.setCurrentUserId(response.userId);
         this.saveToken(response.token);
+        console.log(`${response.userId} ${response.token}`);
+        return response; // Return the response from the map operator
       }),
       catchError(this.handleError)
     );
+
+    return loginRequest; // Return the observable
   }
+
+  // login(username: string, password: string) {
+  //   return this.http.post<{ token: string, userId: string }>(`${this.apiUrl}/users/login`, { username, password }).pipe(
+  //     map(response => {
+  //       // Assuming the response contains the user object upon successful login
+  //       this.setCurrentUserId(response.userId);
+  //       this.saveToken(response.token);
+  //       console.log(`${response.userId} ${response.token}`)
+  //     }),
+  //     catchError(this.handleError)
+  //   );
+  // }
 
   private handleError(error: any): Observable<any> {
     console.error('An error occurred:', error);

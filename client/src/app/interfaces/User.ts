@@ -1,7 +1,7 @@
 import {Meetup} from "./Meetup";
 
 export interface User {
-  id: string;
+  _id: string;
   username: string,
   firstname: string,
   lastname: string,

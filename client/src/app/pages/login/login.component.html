@@ -1,13 +1,16 @@
 <h2>Login</h2>
 <app-card>
-  <form class="form" (ngSubmit)="onSubmit()">
+  <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="control">
       <label for="username">Username:</label>
-      <input type="text" id="username" name="username" [(ngModel)]="username">
+      <input type="text" id="username" formControlName="username">
     </div>
     <div class="control">
       <label for="password">Password:</label>
-      <input type="password" id="password" name="password" [(ngModel)]="password">
+      <input type="password" id="password" formControlName="password">
+    </div>
+    <div *ngIf="loginError" class="alert alert-danger">
+      {{ loginError }}
     </div>
     <div class="actions">
       <button type="submit">Login</button>

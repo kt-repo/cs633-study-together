@@ -6,6 +6,7 @@ var logger = require('morgan');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const cors = require('cors');
+const { mongodb_uri } = require('./config/config');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -37,14 +38,8 @@ app.use('/meetup', meetupRouter);
 run();
 async function run() {
   try {
-    var prod = false;
-    if (prod) {
-      mongoose.connect(process.env.ATLAS_URI);
-      console.log('Connected to production database...');
-    } else {
-      mongoose.connect(process.env.DATABASE_URL);
-      console.log('Connected to development database...');
-    }
+    mongoose.connect(mongodb_uri);
+    console.log('Connected to database...');
   } catch(err) {
     console.log(err.message);
   }

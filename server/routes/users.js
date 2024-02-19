@@ -11,7 +11,7 @@ var router = express.Router();
 router.post('/register', async (req, res) => {
   try {
     const { username, password, firstname, lastname, address, school } = req.body;
-    const user = new User({ username, password });
+    const user = new User({ username, password, firstname, lastname, address, school });
     await user.save();
     const userId = user._id;
     const token = jwt.sign({ userId: user._id }, 'secret_key');
