@@ -6,7 +6,7 @@ var logger = require('morgan');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const cors = require('cors');
-const { mongodb_uri } = require('./config/config');
+// const { mongodb_uri } = require('./config/config');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -35,9 +35,10 @@ app.use('/api/users', usersRouter);
 app.use('/api/meetup', meetupRouter);
 
 // connect to database
+const mongodb_uri = process.env.DATABASE_URL;
 mongoose.connect(mongodb_uri)
   .then(() => {
-    console.log('Connected to MongoDB Atlas');
+    console.log('Connected to MongoDB');
   })
   .catch(err => {
     console.error('Error connecting to MongoDB Atlas:', err);
