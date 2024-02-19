@@ -15,9 +15,9 @@ var meetupRouter = require('./routes/meetup');
 var app = express();
 
 // Serve Angular static files
-app.use(express.static(path.join(__dirname, '../client/dist/meetup-app-angular')));
+app.use(express.static('../client/dist/meetup-app-angular'));
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist/meetup-app-angular/index.html'));
+  res.sendFile('../client/dist/meetup-app-angular/index.html');
 });
 
 // view engine setup
