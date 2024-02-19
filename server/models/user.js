@@ -2,9 +2,16 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const meetupSchema = require('./meetup');
 
+
 const userSchema = mongoose.Schema({
-    username: { type: String, unique: true },
-    password: String,
+    username: {
+        type: String,
+        unique: true
+    },
+    password: {
+        type: String,
+        unique: true
+    },
     firstname: {
         type: String,
         required: false,
@@ -13,10 +20,11 @@ const userSchema = mongoose.Schema({
         type: String,
         required: false,
     },
-    favorites: {
-        type: meetupSchema.schema,
+    favorites: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Meetup',
         required: false,
-    },
+    }],
     address: {
         type: String,
         required: false,

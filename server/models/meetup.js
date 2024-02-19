@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const meetupSchema = mongoose.Schema({
-    address: {
+    title: {
         type: String,
         required: true,
     },
@@ -9,13 +9,14 @@ const meetupSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    image: {
-        type: String,
-        required: false,
-    },
-    title: {
+    address: {
         type: String,
         required: true,
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     },
 });
 

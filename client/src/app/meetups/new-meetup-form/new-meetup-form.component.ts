@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CardComponent } from '../../ui/card/card.component';
 import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
 import { MeetupService } from 'src/app/services/meetup.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { Meetup } from 'src/app/interfaces/Meetup';
 import { Router } from '@angular/router';
 
@@ -16,11 +17,11 @@ import { Router } from '@angular/router';
 export class NewMeetupFormComponent implements OnInit {
   meetupForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private meetupService: MeetupService, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private meetupService: MeetupService, private authService: AuthService, private router: Router) {
     this.meetupForm = this.formBuilder.group({
       title: [''],
       description: [''],
-      address: ['']
+      address: [''],
     });
   }
 
@@ -28,15 +29,31 @@ export class NewMeetupFormComponent implements OnInit {
   }
 
   submitHandler() {
+    const token = this.authService.getToken();
+    const currentUserId = this.authService.getCurrentUserId();
+    if (!currentUserId) {
+      console.error('User is not logged in');
+      // Handle error, redirect to login page, etc.
+      return;
+    } else {
+      console.log(currentUserId);
+      console.log(token);
+    }
+
     const meetup: Meetup = {
       id: '', // Generate an ID or handle on server-side
       title: this.meetupForm.get('title')?.value || '',
       description: this.meetupForm.get('description')?.value || '',
-      address: this.meetupForm.get('address')?.value || ''
+      address: this.meetupForm.get('address')?.value || '',
+      owner: currentUserId || ''
     };
 
+    console.log(meetup.title);
+    console.log(meetup.description);
+    console.log(meetup.address);
+    console.log(meetup.owner);
 
-    this.meetupService.postMeetup(meetup).subscribe(
+    this.meetupService.postMeetup(meetup, token).subscribe(
       response => {
         console.log('Meetup created successfully:', response);
         this.router.navigate(['/']);

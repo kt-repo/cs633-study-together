@@ -21,7 +21,7 @@ export class LoginComponent {
     this.authService.login(this.username, this.password).subscribe(
       response => {
         console.log('Login successful');
-        // Handle successful login, e.g., redirect to another page
+        // Redirect to another page or perform other actions as needed
       },
       error => {
         console.error('Login failed:', error);

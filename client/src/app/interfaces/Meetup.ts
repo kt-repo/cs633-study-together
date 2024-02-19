@@ -3,4 +3,5 @@ export interface Meetup {
   address: string;
   description: string;
   title: string;
+  owner: string
 }
