@@ -44,3 +44,18 @@
 .actions button:active {
   background-color: #ffe2ed;
 }
+
+.delete-button {
+  margin-left: 5px;
+  margin-top: 5px;
+  background-color: #dc3545; /* Red background color */
+  color: white; /* White text color */
+  border: none; /* Remove border */
+  padding: 10px 20px; /* Add padding */
+  border-radius: 5px; /* Add border radius */
+  cursor: pointer; /* Add cursor pointer on hover */
+}
+
+.delete-button:hover {
+  background-color: #c82333; /* Darker red background color on hover */
+}
