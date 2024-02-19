@@ -35,15 +35,23 @@ app.use('/users', usersRouter);
 app.use('/meetup', meetupRouter);
 
 // connect to database
-run();
-async function run() {
-  try {
-    mongoose.connect(mongodb_uri);
-    console.log('Connected to database...');
-  } catch(err) {
-    console.log(err.message);
-  }
-}
+mongoose.connect(mongodb_uri)
+  .then(() => {
+    console.log('Connected to MongoDB Atlas');
+  })
+  .catch(err => {
+    console.error('Error connecting to MongoDB Atlas:', err);
+  });
+
+// run();
+// async function run() {
+//   try {
+//     mongoose.connect(mongodb_uri);
+//     console.log('Connected to database...');
+//   } catch(err) {
+//     console.log(err.message);
+//   }
+// }
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
