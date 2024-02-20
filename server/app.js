@@ -33,18 +33,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 // // CORS
 // app.use(cors());
 // Enable CORS with specific options for production
-// const corsOptions = {
-//   origin: 'https://cs633-study-together.onrender.com',
-//   methods: '*',
-//   allowedHeaders: 'Content-Type,Authorization',
-//   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-// };
 const corsOptions = {
-  origin: '*',
+  origin: 'https://cs633-study-together.onrender.com',
   methods: '*',
   allowedHeaders: 'Content-Type,Authorization',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
+// const corsOptions = {
+//   origin: '*',
+//   methods: '*',
+//   allowedHeaders: 'Content-Type,Authorization',
+//   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+// };
 app.use(cors(corsOptions));
 
 app.use('/api', indexRouter);
