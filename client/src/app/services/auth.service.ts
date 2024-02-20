@@ -4,7 +4,8 @@ import { User } from 'src/app/interfaces/User';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {Meetup} from "../interfaces/Meetup";
-import { environment } from '../environments/environment';
+// import { environment } from '../environments/environment';
+import { environment } from '../environments/environment.prod';
 
 
 @Injectable({

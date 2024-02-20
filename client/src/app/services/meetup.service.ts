@@ -3,8 +3,8 @@ import { Injectable, inject, signal } from '@angular/core';
 import { Meetup } from '../interfaces/Meetup';
 import {map, Observable, of, throwError} from 'rxjs';
 import {catchError} from "rxjs/operators";
-import { environment } from '../environments/environment';
-
+// import { environment } from '../environments/environment';
+import { environment } from '../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
