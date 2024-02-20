@@ -10,7 +10,8 @@ import { environment } from '../environments/environment.prod';
   providedIn: 'root',
 })
 export class MeetupService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = '/api';
+  // private apiUrl = environment.apiUrl;
   http = inject(HttpClient);
   favorites = signal<Meetup[]>([]);
 

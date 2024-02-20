@@ -12,7 +12,8 @@ import { environment } from '../environments/environment.prod';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = '/api';
+  // private apiUrl = environment.apiUrl;
   private USER_KEY = 'currentUserId';
   private TOKEN_KEY = 'accessToken';
 
