@@ -33,6 +33,7 @@ export class MeetupService {
   }
 
   getMeetups() {
+    console.log(this.apiUrl);
     return this.http.get<Meetup[]>(`${this.apiUrl}/meetup`);
   }
 
