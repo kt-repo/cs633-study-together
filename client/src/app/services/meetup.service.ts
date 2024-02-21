@@ -10,8 +10,8 @@ import { environment } from '../environments/environment.prod';
   providedIn: 'root',
 })
 export class MeetupService {
-  private apiUrl = '/api';
-  // private apiUrl = environment.apiUrl;
+  // private apiUrl = '/api';
+  private apiUrl = environment.apiUrl;
   http = inject(HttpClient);
   favorites = signal<Meetup[]>([]);
 
@@ -36,6 +36,7 @@ export class MeetupService {
   getMeetups() {
     console.log('Making GET request to:', `${this.apiUrl}/meetup`);
     const request = this.http.get<Meetup[]>(`${this.apiUrl}/meetup`);
+    console.log(request);
     request.subscribe(response => console.log('Response received:', response)); // Log the response when it arrives
     return request;
   }
