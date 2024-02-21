@@ -34,8 +34,10 @@ export class MeetupService {
   }
 
   getMeetups() {
-    console.log(this.apiUrl);
-    return this.http.get<Meetup[]>(`${this.apiUrl}/meetup`);
+    console.log('Making GET request to:', `${this.apiUrl}/meetup`);
+    const request = this.http.get<Meetup[]>(`${this.apiUrl}/meetup`);
+    request.subscribe(response => console.log('Response received:', response)); // Log the response when it arrives
+    return request;
   }
 
   getMeetupId(meetup: Meetup) {
