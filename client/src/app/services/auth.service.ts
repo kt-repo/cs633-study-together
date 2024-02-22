@@ -4,15 +4,13 @@ import { User } from 'src/app/interfaces/User';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {Meetup} from "../interfaces/Meetup";
-// import { environment } from '../environments/environment';
-import { environment } from '../environments/environment.prod';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  // private apiUrl = '/api';
   private apiUrl = environment.apiUrl;
   private USER_KEY = 'currentUserId';
   private TOKEN_KEY = 'accessToken';
