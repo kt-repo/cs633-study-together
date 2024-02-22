@@ -23,11 +23,6 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-
-// const host = process.env.HOST || '0.0.0.0'; // Set host to '0.0.0.0' to listen on all network interfaces
-// app.listen(port, host, () => {
-//   console.log(`Server is running on http://${host}:${port}`);
-// });
 app.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
