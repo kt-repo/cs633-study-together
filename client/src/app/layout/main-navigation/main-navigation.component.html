@@ -10,7 +10,7 @@
           <label class="badge">{{ meetupService.totalFavorites }}</label>
         </a>
       </li>
-      <li><a routerLink="/login">Login</a></li>
+      <li><a routerLink="/login">{{ authService.isUserLoggedIn ? 'Log out' : 'Log in' }}</a></li>
       <li><a routerLink="/register">Registration</a></li>
     </ul>
   </nav>
