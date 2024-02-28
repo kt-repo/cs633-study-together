@@ -2,10 +2,7 @@ import {Injectable, signal} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from 'src/app/interfaces/User';
 import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import {Meetup} from "../interfaces/Meetup";
 import { environment } from '../../environments/environment';
-import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -17,7 +14,10 @@ export class AuthService {
   private TOKEN_KEY = 'accessToken';
   isLoggedIn = signal<boolean>(false);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    localStorage.setItem('accessToken', '');
+    localStorage.setItem('currentUserId', '');
+  }
 
   get isUserLoggedIn() {
     return this.isLoggedIn();
@@ -29,34 +29,11 @@ export class AuthService {
 
   register(username: string, password: string, firstname: string, lastname: string, address: string, school: string): Observable<any> {
     const registerRequest = this.http.post<{ token: string, userId: string }>(`${this.apiUrl}/users/register`, { username, password, firstname, lastname, address, school });
-
-    registerRequest.pipe(
-      map(response => {
-        // Assuming the response contains the user object upon successful registration
-        this.setCurrentUserId(response.userId);
-        this.saveToken(response.token);
-        return response;
-      }),
-      catchError(this.handleError)
-    );
     return registerRequest; // Return the observable
   }
 
   login(username: string, password: string): Observable<any> {
     const loginRequest = this.http.post<{ token: string, userId: string }>(`${this.apiUrl}/users/login`, { username, password });
-
-    loginRequest.pipe(
-      map(response => {
-        // Assuming the response contains the user object upon successful login
-        this.setCurrentUserId(response.userId);
-        this.saveToken(response.token);
-        console.log(`${response.userId} ${response.token}`);
-        this.updateLoginStatus(true);
-        return response; // Return the response from the map operator
-      }),
-      catchError(this.handleError)
-    );
-
     return loginRequest; // Return the observable
   }
 
@@ -72,9 +49,11 @@ export class AuthService {
   // token
   saveToken(token: string): void {
     localStorage.setItem('accessToken', token);
+    console.log(`saving token: ${token}`)
   }
 
   getToken(): string | null {
+    console.log(`getting token: ${localStorage.getItem('accessToken')}`)
     return localStorage.getItem('accessToken');
   }
 
