@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable, signal} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from 'src/app/interfaces/User';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {Meetup} from "../interfaces/Meetup";
 import { environment } from '../../environments/environment';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -14,8 +15,17 @@ export class AuthService {
   private apiUrl = environment.apiUrl;
   private USER_KEY = 'currentUserId';
   private TOKEN_KEY = 'accessToken';
+  isLoggedIn = signal<boolean>(false);
 
   constructor(private http: HttpClient) { }
+
+  get isUserLoggedIn() {
+    return this.isLoggedIn();
+  }
+
+  updateLoginStatus(status: boolean) {
+    this.isLoggedIn.update(() => status);
+  }
 
   register(username: string, password: string, firstname: string, lastname: string, address: string, school: string): Observable<any> {
     const registerRequest = this.http.post<{ token: string, userId: string }>(`${this.apiUrl}/users/register`, { username, password, firstname, lastname, address, school });
@@ -45,21 +55,10 @@ export class AuthService {
       }),
       catchError(this.handleError)
     );
+    this.updateLoginStatus(true);
 
     return loginRequest; // Return the observable
   }
-
-  // login(username: string, password: string) {
-  //   return this.http.post<{ token: string, userId: string }>(`${this.apiUrl}/users/login`, { username, password }).pipe(
-  //     map(response => {
-  //       // Assuming the response contains the user object upon successful login
-  //       this.setCurrentUserId(response.userId);
-  //       this.saveToken(response.token);
-  //       console.log(`${response.userId} ${response.token}`)
-  //     }),
-  //     catchError(this.handleError)
-  //   );
-  // }
 
   private handleError(error: any): Observable<any> {
     console.error('An error occurred:', error);

@@ -13,6 +13,7 @@ export class MeetupService {
   http = inject(HttpClient);
   favorites = signal<Meetup[]>([]);
 
+
   get totalFavorites() {
     return this.favorites().length;
   }
@@ -82,7 +83,7 @@ export class MeetupService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    console.log('heyyyyyyyy');
+
     console.log(token);
     console.log(meetup);
     return this.http.delete<any>(`${this.apiUrl}/meetup/${meetupId}`, { headers }).pipe(
