@@ -31,14 +31,14 @@ export class NewMeetupFormComponent implements OnInit {
   submitHandler() {
     const token = this.authService.getToken();
     const currentUserId = this.authService.getCurrentUserId();
-    if (!currentUserId) {
-      console.error('User is not logged in');
-      // Handle error, redirect to login page, etc.
-      return;
-    } else {
-      console.log(currentUserId);
-      console.log(token);
-    }
+    // if (!token) {
+    //   console.error('User is not logged in');
+    //   // Handle error, redirect to login page, etc.
+    //   return;
+    // } else {
+    //   console.log(currentUserId);
+    //   console.log(token);
+    // }
 
     const meetup: Meetup = {
       _id: '', // Generate an ID or handle on server-side
