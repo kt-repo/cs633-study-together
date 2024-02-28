@@ -30,6 +30,12 @@ export class NewMeetupFormComponent implements OnInit {
 
   submitHandler() {
     const token = this.authService.getToken();
+    if (!token) {
+      console.error('User token is not available');
+      // Handle error, redirect to login page, etc.
+      return;
+    }
+
     const currentUserId = this.authService.getCurrentUserId();
     if (!currentUserId) {
       console.error('User is not logged in');

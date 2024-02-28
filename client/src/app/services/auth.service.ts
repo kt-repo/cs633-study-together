@@ -51,11 +51,11 @@ export class AuthService {
         this.setCurrentUserId(response.userId);
         this.saveToken(response.token);
         console.log(`${response.userId} ${response.token}`);
+        this.updateLoginStatus(true);
         return response; // Return the response from the map operator
       }),
       catchError(this.handleError)
     );
-    this.updateLoginStatus(true);
 
     return loginRequest; // Return the observable
   }
