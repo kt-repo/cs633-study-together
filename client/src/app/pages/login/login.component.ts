@@ -46,6 +46,8 @@ export class LoginComponent {
         }
 
         // If there is no error in the response, consider it as a successful login
+        this.authService.saveToken(response.token);
+        this.authService.setCurrentUserId(response.userId);
         console.log('Login successful');
         // Redirect to another page or perform other actions as needed
         this.router.navigate(['/'])

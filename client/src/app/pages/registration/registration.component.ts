@@ -56,6 +56,8 @@ export class RegistrationComponent {
         }
 
         console.log('Registration successful');
+        this.authService.saveToken(response.token);
+        this.authService.setCurrentUserId(response.userId);
         // Handle successful registration, e.g., redirect to login page
         this.router.navigate(['/']);
       },

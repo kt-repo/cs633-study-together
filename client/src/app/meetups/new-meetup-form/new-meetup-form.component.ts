@@ -1,7 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../../ui/card/card.component';
-import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { MeetupService } from 'src/app/services/meetup.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Meetup } from 'src/app/interfaces/Meetup';
@@ -29,7 +29,16 @@ export class NewMeetupFormComponent implements OnInit {
   }
 
   submitHandler() {
+    console.log('retrieving token')
     const token = this.authService.getToken();
+    if (!token) {
+      console.error('User token is not available');
+      // Handle error, redirect to login page, etc.
+      return;
+    } else {
+      console.log('got token in new meetup submit handler')
+    }
+
     const currentUserId = this.authService.getCurrentUserId();
     if (!currentUserId) {
       console.error('User is not logged in');
@@ -47,11 +56,6 @@ export class NewMeetupFormComponent implements OnInit {
       address: this.meetupForm.get('address')?.value || '',
       owner: currentUserId || ''
     };
-
-    console.log(meetup.title);
-    console.log(meetup.description);
-    console.log(meetup.address);
-    console.log(meetup.owner);
 
     this.meetupService.postMeetup(meetup, token).subscribe(
       response => {

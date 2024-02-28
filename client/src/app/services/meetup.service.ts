@@ -47,11 +47,9 @@ export class MeetupService {
 
   postMeetup(meetup: Meetup, token: String | null): Observable<any> {
 
-    const formData = new FormData();
-    formData.append('title', meetup.title);
-    formData.append('description', meetup.description);
-    formData.append('address', meetup.address);
-    formData.append('owner', meetup.owner);
+    if (!token) {
+      return throwError('Token is not available');
+    }
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -60,7 +58,8 @@ export class MeetupService {
 
     return this.http.post<any>(`${this.apiUrl}/meetup`, meetup, {  headers }).pipe(
       map(response => {
-        console.log(meetup);
+        console.log('Meetup created: ', response);
+        return response;
       }),
       catchError(error => {
         let errorMessage = 'An error occurred during login';
